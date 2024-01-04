@@ -82,7 +82,7 @@ I would recommend the incident response team to conduct a more comprehensive ana
 - <b> CONTAINMENT ERADICATION AND RECOVERY: The steps taken for containment, eradication, and recovery depend on the organization's methods and policies. A general overview would involve disconnecting the computer from the network for containment. For eradication, it could range from running anti-malware and virus programs to locate malicious files and remove them. For recovery this could possibly be reimaging the computer's operating system and reinstalling it, depending on the severity of the host infection.
 
  </b>
-- <b> POST INCIDENT ACTIVITY: In this example scenario, a user processed an obfuscated command on their host computer that led to a malicious domain. With proper investigation, we were able to gather information about the malicious activity on the network. All documented information would be shared with all stakeholders within the company where remediation and prevention techniques can be implemented for incidents like this or similar scenarios. In conclusion, post-incident activity serves as an informative lesson on handling malicious events..   </b>
+- <b> POST INCIDENT ACTIVITY: In this example scenario, a user processed an obfuscated command on their host computer that led to a malicious domain. With proper investigation, we were able to gather information about the malicious activity on the network. All documented information would be shared with all stakeholders within the company where remediation and prevention techniques can be implemented for incidents like this or similar scenarios. In conclusion, post-incident activity serves as an informative lesson on handling malicious events.  </b>
 
 
 </p>
